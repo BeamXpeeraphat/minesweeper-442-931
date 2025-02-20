@@ -1,5 +1,7 @@
 package com.lab;
 
+import java.util.Scanner;
+
 /**
  * Hello world!
  */
@@ -10,7 +12,7 @@ public class App {
         game.setMineCell(1, 5);
         game.setMineCell(1, 8);
         game.setMineCell(2, 4);
-        game.setMineCell(3, 6);        
+        game.setMineCell(3, 6);
         game.setMineCell(4, 2);
         game.setMineCell(5, 4);
         game.setMineCell(6, 2);
@@ -18,15 +20,43 @@ public class App {
         game.setMineCell(8, 6);
         return game;
     }
+
     static Minesweeper initMineFieldFromFile(String minefieldFile) {
         return new Minesweeper(minefieldFile);
     }
+
     public static void main(String[] args) {
-        // Task 3: Implement a menu to select the mine field template
-        // Design the menu by yourself.
+        Scanner scanner = new Scanner(System.in);
+        int choice;
+
+        System.out.println("1 for table1");
+        System.out.println("2 for table2");
+        System.out.println("3 for escape");
+
+        while (true) {
+            System.out.print("Enter your choice: ");
+
+            if (scanner.hasNextInt()) {
+                choice = scanner.nextInt();
                 
-        //Minesweeper game = initMineField();
-         Minesweeper game = initMineFieldFromFile("minefield/minefield01.txt");
-        game.displayField();
-    }    
+                if (choice == 1) {
+                    Minesweeper game = initMineField();
+                    game.displayField();
+                } else if (choice == 2) {
+                    Minesweeper game = initMineFieldFromFile("minefield/minefield01.txt");
+                    game.displayField();
+                } else if (choice == 3) {
+                    System.out.println("END PROGRAM");
+                    break; // ออกจาก loop
+                } else {
+                    System.out.println("Invalid input! Please enter 1, 2, or 3.");
+                }
+            } else {
+                System.out.println("Invalid input! Please enter an integer.");
+                scanner.next(); // ล้าง buffer ของ Scanner
+            }
+        }
+
+        scanner.close();
+    }
 }
